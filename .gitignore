@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+
+# Mosaik output and local files (never commit people's media)
+*_mosaik.*
+*_mosaik (*).*
+.mosaik_*
+*.part
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

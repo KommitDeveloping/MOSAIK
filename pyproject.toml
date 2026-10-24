@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mosaik"
+dynamic = ["version"]
+description = "Censor faces with a mosaic effect in photos and videos, entirely offline."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+keywords = ["privacy", "face", "anonymization", "mosaic", "pixelate", "video", "photo", "ffmpeg"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: X11 Applications",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: MacOS X",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Multimedia :: Video",
+]
+dependencies = [
+    "numpy",
+    "opencv-python-headless>=4.8",
+    "imageio-ffmpeg",
+]
+
+[project.optional-dependencies]
+dnd = ["tkinterdnd2"]
+dev = ["pytest>=7", "ruff>=0.5", "build"]
+
+[project.scripts]
+mosaik = "mosaik.cli:main"
+
+[project.gui-scripts]
+mosaik-gui = "mosaik.gui.app:main"
+
+[project.urls]
+Homepage = "https://github.com/ErickDragomir/mosaik"
+Issues = "https://github.com/ErickDragomir/mosaik/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "mosaik.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mosaik = ["data/*.onnx", "data/YUNET_LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["UP006", "UP007", "UP035", "UP045"]  # keep annotations valid on Python 3.9
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_media.py" = ["E501"]  # real FFmpeg output samples
